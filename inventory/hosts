@@ -1,3 +1,4 @@
 [servers]
-ec2-44-234-252-223.us-west-2.compute.amazonaws.com    ansible_user=ubuntu     ansible_ssh_private_key_file=~/.ssh/ansible.pem
-ec2-44-242-141-242.us-west-2.compute.amazonaws.com    ansible_user=ubuntu     ansible_ssh_private_key_file=~/.ssh/ansible.pem
+ec2-35-88-6-102.us-west-2.compute.amazonaws.com     ansible_user=ubuntu     ansible_ssh_private_key_file=~/.ssh/ansible.pem
+ec2-35-83-254-129.us-west-2.compute.amazonaws.com   ansible_user=ubuntu     ansible_ssh_private_key_file=~/.ssh/ansible.pem
+ec2-34-223-106-201.us-west-2.compute.amazonaws.com  ansible_user=ubuntu     ansible_ssh_private_key_file=~/.ssh/ansible.pem

@@ -1,5 +1,5 @@
-- name: ping all hosts
-  hosts: "*"
-  tasks:
-    - name: ping all hosts
-      ansible.builtin.ping:
+- name: ping all hosts # name of the playbook
+  hosts: "*" # which hosts are you going to run this on? here we select all groups
+  tasks: # indicates that we start listing tasks
+    - name: ping all hosts # name of my first task
+      ansible.builtin.ping: # module to run, could be shortened to "ping" instead of "ansible.builtin.ping"

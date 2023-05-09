@@ -3,6 +3,6 @@
   become: yes
   tasks:
     - name: update and upgrade apt
-      apt:
+      ansible.builtin.apt:
         update_cache: yes
         upgrade: 'yes'
