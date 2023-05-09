@@ -15,7 +15,7 @@ ansible-playbook playbooks/ping.yml -i inventory/hosts
 The equivalent non-Playbook version of this is:
 
 ```shell
-ansible -i inventory/hosts "*" -m ping --user ubuntu --private-key ~/.ssh/ansible.pem
+ansible -i inventory/hosts "*" -m ping
 ```
 
 ## Prerequisites
