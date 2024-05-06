@@ -1,9 +1,10 @@
-- name: install zhs on all hosts
+---
+- name: Install zhs on all hosts
   hosts: "*"
   tasks:
-    - name: install zhs
+    - name: Install zhs
       apt:
-        name: zsh   
+        name: zsh
         state: present
         update_cache: true
       become: true

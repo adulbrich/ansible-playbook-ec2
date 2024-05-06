@@ -1,0 +1,19 @@
+---
+- name: Delete all EC2 instances and key after class demo
+  hosts: localhost
+  gather_facts: no
+  # ideally, add a task to remove icmp from default security group
+  tasks:
+    - name: Remove key pair from AWS by name
+      amazon.aws.ec2_key:
+        name: ansible
+        state: absent
+    - name: Terminate every running instance in a region. Use with EXTREME caution.
+      amazon.aws.ec2_instance:
+        state: absent
+        filters:
+          instance-state-name: running
+    - name: Delete hosts file
+      file:
+        path: "../inventory/hosts"
+        state: absent

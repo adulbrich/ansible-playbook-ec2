@@ -36,10 +36,19 @@ For the purpose of this demo:
 
 - You need a Unix-like system for the control node (i.e., the computer where you execute `ansible` commands or run playbook). If using Windows, you'll need (to use) WSL.
 - Ansible needs to be installed. Please refer to their documentation to do so.
-- I use the same private key `ansible.pem` to SSH into both instances.
+- I use the same private key `ansible.pem` to SSH into all instances.
 - Instances are running Ubuntu Server, hence the default username is `ubuntu`.
-- SSH needs to be open on your security groups. All instances are on the same security group.
+- SSH and ICMP need to be open on your security groups. All instances are on the same security group.
 - The Public IPv4 DNS of my EC2 instance(s) are from an AWS Academy Learner Lab. They change every time the learner lab restarts.
+- The AWS CLI credentials also change every time the learner lab restarts.
+
+### Pre and Post Demo Playbooks
+
+For in-class demonstrations, I've created two playbooks to initialize the required EC2 resources.
+
+Before the demo, run `ansible-playbook ./playbooks/pre-demo.yml`. This will create a key pair, create three EC2 instances running Ubuntu, update the security group, and create a `hosts` file.
+
+After the demo, run `ansible-playbook ./playbooks/post-demo.yml`. This will delete the key pair, delete **all** EC2 intances, and delete the `hosts` file.
 
 ## References
 

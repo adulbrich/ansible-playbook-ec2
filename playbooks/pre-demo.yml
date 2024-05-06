@@ -1,0 +1,62 @@
+---
+- name: Create three EC2 instances for class demo
+  hosts: localhost
+  gather_facts: no
+  vars:
+    ansible_user: ubuntu
+    ansible_ssh_private_key_file: ~/.ssh/ansible.pem
+    region: us-east-1
+
+  tasks:
+    - name: Create ED25519 key pair and save private key into a file
+      amazon.aws.ec2_key:
+        name: ansible
+        key_type: ed25519
+        file_name: "{{ ansible_ssh_private_key_file }}"
+    - name: Launch instances
+      amazon.aws.ec2_instance:
+        key_name: ansible
+        instance_type: t2.micro
+        image_id: ami-04b70fa74e45c3917
+        wait: yes
+        count: 3
+        network:
+          assign_public_ip: true
+          security_group: default
+        region: "{{ region }}"
+        state: present
+        
+      register: ec2_instances
+
+    - name: Open port 22 for SSH in the default security group
+      amazon.aws.ec2_security_group:
+        name: default
+        description: "default VPC security group"
+        region: "{{ region }}"
+        rules:
+          - proto: tcp # required to ssh into and update apt/instal zsh
+            from_port: 22
+            to_port: 22
+            cidr_ip: 0.0.0.0/0
+          - proto: icmp # required for pinging
+            from_port: -1
+            to_port: -1
+            cidr_ip: 0.0.0.0/0
+
+    - name: Ensure group [servers] exists in hosts file
+      lineinfile:
+        path: "../inventory/hosts"
+        line: "[servers]"
+        insertafter: EOF
+        create: true
+        state: present
+
+    - name: Update Ansible hosts file
+      lineinfile:
+        path: "../inventory/hosts"
+        line: "{{ item.public_dns_name }} ansible_user={{ ansible_user }} ansible_ssh_private_key_file={{ ansible_ssh_private_key_file }}"
+        insertafter: "\\[servers\\]"
+        create: true
+        state: present
+      loop: "{{ ec2_instances.instances }}"
+
